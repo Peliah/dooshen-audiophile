@@ -42,6 +42,12 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-light: var(--brand-primary-light);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-neutral-100: var(--brand-neutral-100);
+  --color-brand-neutral-200: var(--brand-neutral-200);
 }
 
 body {
@@ -81,6 +87,13 @@ body {
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+
+
+  --brand-primary: #d87d4a;
+  --brand-primary-light: #fbaf85;
+  --brand-secondary: #101010;
+  --brand-neutral-100: #fafafa;
+  --brand-neutral-200: #f1f1f1;
 }
 
 .dark {
