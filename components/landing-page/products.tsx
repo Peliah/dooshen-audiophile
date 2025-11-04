@@ -9,7 +9,7 @@ const Products = () => {
     <section className="max-sm:pt-[92px] max-sm:pb-[120px] max-md:py-[148px] md:py-[200px] brand-width mx-auto px-6 max-sm:space-y-6 max-md:space-y-8 md:space-y-12">
       <QuickProducts />
 
-      <div className="max-sm:mt-[120px] max-md:mt-[96] md:mt-[168px] md:px-[95px] md:h-[560px] md:bg-[url(/home/speaker-circles.svg)] max-md:bg-[url(/home/speaker-circles-mobile.svg)] max-sm:bg-contain bg-no-repeat bg-brand-primary rounded-xl flex max-md:flex-col justify-between max-md:items-center relative overflow-hidden">
+      <div className="max-sm:mt-[120px] max-md:mt-[96] md:mt-[168px] md:px-[95px] md:h-[560px] md:bg-[url(/assets/images/speaker-circles.svg)] max-md:bg-[url(/assets/images/speaker-circles-mobile.svg)] max-sm:bg-contain bg-no-repeat bg-brand-primary rounded-xl flex max-md:flex-col justify-between max-md:items-center relative overflow-hidden">
         <figure className="max-md:w-[200px] lg:transform lg:translate-y-24 mt-6 lg:mb-0 lg:mt-0">
           <Image
             src={"/assets/images/speaker-main.png"}
