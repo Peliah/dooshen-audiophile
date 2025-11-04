@@ -23,6 +23,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { sendOrderEmail } from "@/lib/send-email";
 
 const initialValues: Partial<CheckoutFormValues> = {
   name: "",
@@ -96,6 +97,38 @@ const CheckoutPage = () => {
       });
 
       console.log("Order placed successfully with ID:", orderId);
+
+      // Send confirmation email
+      const emailResult = await sendOrderEmail({
+        orderId,
+        customer: {
+          name: data.name,
+          email: data.email,
+          phone: data.phoneNumber,
+        },
+        shipping: {
+          address: data.address,
+          city: data.city,
+          country: data.country,
+          zip: data.zipCode,
+        },
+        items: cart.map((item) => ({
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+        totals: {
+          subtotal: cartTotal,
+          shipping: 50,
+          taxes: cartTotal * 0.07,
+          grandTotal: cartTotal + 50,
+        },
+      });
+
+      if (!emailResult.success) {
+        // Don't fail the order if email fails, just log it
+        console.error("Error sending confirmation email:", emailResult.error);
+      }
 
       setIsModalOpen(true);
       form.reset();

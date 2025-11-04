@@ -73,7 +73,7 @@ const SingleHeadphonePage = () => {
             <p className="max-sm:mb-6 mb-8 opacity-50">
               {headphone?.description}
             </p>
-            <h6 className="mb-11">$ {headphone?.price.toLocaleString()}</h6>
+            <h6 className="mb-11">${headphone?.price.toLocaleString()}</h6>
             <div className="flex items-center gap-4">
               <div
                 className={`w-[120px] h-12 bg-brand-neutral-200 flex justify-between items-center text-[13px] font-bold tracking-[1px] px-4`}
