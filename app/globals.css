@@ -183,3 +183,8 @@ span {
 .subtitle {
   @apply text-[13px] font-bold uppercase leading-[25px] tracking-[1px] text-brand-primary;
 }
+
+.brand-width {
+  max-width: 1280px;
+  width: 100%;
+}
