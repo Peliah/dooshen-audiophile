@@ -116,6 +116,7 @@ const CheckoutPage = () => {
           name: item.name,
           price: item.price,
           quantity: item.quantity,
+          imageUrl: item.mobileUrl || item.preview || item.desktopUrl,
         })),
         totals: {
           subtotal: cartTotal,

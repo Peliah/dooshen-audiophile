@@ -19,6 +19,7 @@ export interface SendEmailParams {
     name: string;
     price: number;
     quantity: number;
+    imageUrl?: string;
   }>;
   totals: {
     subtotal: number;
@@ -46,17 +47,26 @@ export async function sendOrderConfirmationEmail(params: SendEmailParams) {
     },
   });
 
-  // Format order items for invoice-style HTML display
+  // Format order items for invoice-style HTML display with images
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://dooshen-audiophile.vercel.app";
   const itemsListHtml = items
     .map((item, index) => {
       const itemTotal = item.price * item.quantity;
       const productName = `${item.name} x${item.quantity}`;
+      const imageUrl = item.imageUrl 
+        ? (item.imageUrl.startsWith('http') ? item.imageUrl : `${baseUrl}${item.imageUrl}`)
+        : `${baseUrl}/assets/images/headphones-1.svg`;
       return `
                     <tr class="invoice-row">
-                      <td class="invoice-item">${productName}</td>
+                      <td class="invoice-item">
+                        <div class="invoice-item-content">
+                          ${item.imageUrl ? `<img src="${imageUrl}" alt="${item.name}" class="invoice-product-image" />` : ''}
+                          <span class="invoice-product-name">${productName}</span>
+                        </div>
+                      </td>
                       <td class="invoice-price">$${itemTotal.toLocaleString()}</td>
                     </tr>
-                    ${index < items.length - 1 ? '<tr><td colspan="3" class="invoice-divider">-</td></tr>' : ''}
+                    ${index < items.length - 1 ? '<tr><td colspan="2" class="invoice-divider">-</td></tr>' : ''}
                   `;
     })
     .join("");
@@ -137,14 +147,17 @@ export async function sendOrderConfirmationEmail(params: SendEmailParams) {
               font-size: 11px;
             }
             .invoice-item,
-            .invoice-dashes,
             .invoice-price {
               padding: 10px 8px;
               font-size: 12px;
             }
-            .invoice-dashes {
-              font-size: 10px;
-              min-width: 50px;
+            .invoice-product-image {
+              width: 50px !important;
+              height: 50px !important;
+              border: 2px solid #000 !important;
+            }
+            .invoice-item-content {
+              gap: 10px !important;
             }
             .footer {
               padding: 20px 15px;
@@ -280,15 +293,12 @@ export async function sendOrderConfirmationEmail(params: SendEmailParams) {
             letter-spacing: 1px;
           }
           .invoice-header th:first-child {
-            width: 40%;
-          }
-          .invoice-header th:nth-child(2) {
-            width: 35%;
+            width: 70%;
           }
           .invoice-header th:last-child {
             border-right: none;
             text-align: right;
-            width: 25%;
+            width: 30%;
           }
           .invoice-row {
             border-bottom: 2px solid #000;
@@ -298,6 +308,23 @@ export async function sendOrderConfirmationEmail(params: SendEmailParams) {
             font-weight: 700;
             color: #000;
             border-right: 2px solid #000;
+          }
+          .invoice-item-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+          }
+          .invoice-product-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border: 3px solid #000;
+            background-color: #f9f9f9;
+            flex-shrink: 0;
+          }
+          .invoice-product-name {
+            font-weight: 700;
+            color: #000;
           }
           .invoice-price {
             padding: 15px 20px;
@@ -416,7 +443,6 @@ export async function sendOrderConfirmationEmail(params: SendEmailParams) {
                   <thead class="invoice-header">
                     <tr>
                       <th>Product</th>
-                      <th></th>
                       <th>Price</th>
                     </tr>
                   </thead>
