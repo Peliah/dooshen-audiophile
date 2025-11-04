@@ -51,11 +51,9 @@ export async function sendOrderConfirmationEmail(params: SendEmailParams) {
     .map((item, index) => {
       const itemTotal = item.price * item.quantity;
       const productName = `${item.name} x${item.quantity}`;
-      const dashes = "-".repeat(Math.max(1, 60 - productName.length - itemTotal.toLocaleString().length - 3));
       return `
                     <tr class="invoice-row">
                       <td class="invoice-item">${productName}</td>
-                      <td class="invoice-dashes">${dashes}</td>
                       <td class="invoice-price">$${itemTotal.toLocaleString()}</td>
                     </tr>
                     ${index < items.length - 1 ? '<tr><td colspan="3" class="invoice-divider">-</td></tr>' : ''}
@@ -68,8 +66,7 @@ export async function sendOrderConfirmationEmail(params: SendEmailParams) {
     .map((item) => {
       const itemTotal = item.price * item.quantity;
       const productName = `${item.name} x${item.quantity}`;
-      const dashes = "-".repeat(Math.max(1, 60 - productName.length - itemTotal.toLocaleString().length - 3));
-      return `${productName} ${dashes} $${itemTotal.toLocaleString()}`;
+      return `${productName} $${itemTotal.toLocaleString()}`;
     })
     .join("\n");
 
@@ -188,7 +185,6 @@ export async function sendOrderConfirmationEmail(params: SendEmailParams) {
           }
           .content {
             background-color: #ffffff;
-            padding: 30px 40px;
           }
           .welcome-section {
             background-color: #ffffff;
@@ -217,7 +213,6 @@ export async function sendOrderConfirmationEmail(params: SendEmailParams) {
           }
           .order-details {
             background-color: #ffffff;
-            padding: 30px;
             margin: 30px 0;
             border: 4px solid #000;
           }
@@ -303,15 +298,6 @@ export async function sendOrderConfirmationEmail(params: SendEmailParams) {
             font-weight: 700;
             color: #000;
             border-right: 2px solid #000;
-          }
-          .invoice-dashes {
-            padding: 15px 10px;
-            font-family: 'Courier New', monospace;
-            color: #666;
-            font-size: 14px;
-            border-right: 2px solid #000;
-            white-space: nowrap;
-            overflow: hidden;
           }
           .invoice-price {
             padding: 15px 20px;
