@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "@/components/landing-page/footer";
 import Navbar from "@/components/landing-page/navbar";
 import { Toaster } from "@/components/ui/sonner";
+import { ConvexClientProvider } from "@/lib/convex-client-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,10 +36,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} antialiased`}
       >
-        <Navbar/>
-        {children}
-        <Toaster/>
-        <Footer/>
+        <ConvexClientProvider>
+          <Navbar/>
+          {children}
+          <Toaster/>
+          <Footer/>
+        </ConvexClientProvider>
       </body>
     </html>
   );
